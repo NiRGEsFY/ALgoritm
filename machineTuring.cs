@@ -90,7 +90,6 @@ namespace ALgoritm
                     return false;
                 }
             }
-            Console.WriteLine(line);
             return true;
         }
         public void Start()
