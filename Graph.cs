@@ -63,12 +63,22 @@ namespace ALgoritm
             int[] color = new int[V];
             for (int i = 0; i < V; i++)
                 color[i] = 0;
+            ConsoleColor[] consoleColor = new ConsoleColor[] 
+            { 
+                ConsoleColor.Green, ConsoleColor.Red, ConsoleColor.Cyan,
+                ConsoleColor.Yellow, ConsoleColor.Blue, ConsoleColor.Magenta,
+                ConsoleColor.DarkGray, ConsoleColor.DarkGreen, ConsoleColor.DarkYellow
+            };
 
             if (KColorableUtil(k, color, 0))
             {
                 Console.WriteLine($"Граф может быть покрашен в {k} цветов:");
                 for (int i = 0; i < V; i++)
+                {
+                    Console.ForegroundColor = consoleColor[color[i]];
                     Console.WriteLine($"Вершина {i + 1} -> Цвет {color[i]}");
+                }
+                Console.ForegroundColor = ConsoleColor.White;
                 return true;
             }
             else

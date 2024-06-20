@@ -9,61 +9,6 @@
             int.TryParse(Console.ReadLine(), out switcher);
             switch(switcher){
                 case 1:
-                    /*
-                    Graph graph = new Graph(8);
-                    graph.AddEdge(1, 0);
-                    graph.AddEdge(1, 2);
-                    graph.AddEdge(1, 3);
-                    graph.AddEdge(2, 4);
-                    graph.AddEdge(4, 5);
-                    graph.AddEdge(6, 7);
-                    graph.AddEdge(7, 1);
-                    graph.AddEdge(8, 4);
-                    graph.AddEdge(5, 4);
-                    graph.AddEdge(5, 2);
-                    graph.AddEdge(5, 8);
-
-                    graph.IsKColorable(3);
-
-                    Graph graph2 = new Graph(4);
-                    graph2.AddEdge(0, 1);
-                    graph2.AddEdge(1, 2);
-                    graph2.AddEdge(2, 3);
-                    graph2.AddEdge(3, 0);
-
-                    List<Tuple<int, int>> cubicSubgraph = graph2.FindCubicSubgraph();
-
-                    if (cubicSubgraph != null)
-                    {
-                        Console.WriteLine("Подмножество существует:");
-                        foreach (var edge in cubicSubgraph)
-                        {
-                            Console.WriteLine($"{edge.Item1} - {edge.Item2}");
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine("Подмножество не существует.");
-                    }
-
-
-                    Graph graph3 = new Graph(5);
-
-                    graph3.AddEdge(0, 1);
-                    graph3.AddEdge(1, 2);
-                    graph3.AddEdge(2, 3);
-                    graph3.AddEdge(3, 4);
-                    graph3.AddEdge(4, 0);
-
-                    if (graph3.HasHamiltonianCycle())
-                    {
-                        Console.WriteLine("Граф имеет гамильтонов цикл");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Граф не имеет гамильтонов цикл");
-                    }
-                    */
                     string[][] rule = new string[][] { 
                         new string[] {"Q0'0R"},
                         new string[] {"Q0'1R"},
@@ -190,7 +135,85 @@
 
                     break;
                 case 2:
-                    
+                    int[,] adjacencyMatrix = {
+                        { 0, 1, 1, 1, 0, 0, 0 },
+                        { 1, 0, 1, 0, 1, 1, 0 },
+                        { 1, 1, 0, 1, 0, 0, 0 },
+                        { 1, 0, 1, 0, 1, 1, 1 },
+                        { 0, 1, 0, 1, 0, 1, 0 },
+                        { 0, 1, 0, 1, 1, 0, 1 },
+                        { 0, 0, 0, 1, 0, 1, 0 }
+                    };
+                    int[,] incidenceMatrix =
+                    {
+                        { 1, 1, 1, 0, 0, 0, 0, 0 ,0 ,0 ,0 },
+                        { 1, 0, 0, 1, 1, 1, 0, 0 ,0 ,0, 0 },
+                        { 0, 1, 0, 1, 0, 0, 1, 0 ,0 ,0, 0 },
+                        { 0, 0, 1, 0, 0, 0, 1, 1 ,1 ,1, 0 },
+                        { 0, 0, 0, 0, 1, 0, 0, 1 ,0 ,0, 1 },
+                        { 0, 0, 0, 0, 0, 1, 0, 0 ,1 ,0, 0 },
+                        { 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,1, 0 }
+                    };
+                    string[] incidenceChanel = { "1,2", "1,3", "1,4", "2,3", "2,5", "2,6", "3,4", "4,5", "4,6", "4,7", "5,6" };
+
+                    Console.WriteLine("Матрица смежность:");
+                    Console.Write("   ");
+                    for (int i = 0; i < 7; i++)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.Write($" {i+1} ");
+                    }
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine();
+                    for (int i = 0; i < 7; i++)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.Write($" {i+1} ");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        for (int j = 0; j < 7; j++)
+                        {
+                            Console.Write($" {adjacencyMatrix[i,j]} ");
+                        }
+                        Console.WriteLine();
+                    }
+                    Console.WriteLine();
+                    Console.WriteLine("Матрица инцидентности:");
+                    Console.Write("   ");
+                    for (int i = 0; i < 11; i++)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.Write($" {incidenceChanel[i]} ");
+                    }
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine();
+                    for (int i = 0; i < 7; i++)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.Write($" {i + 1} ");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        for (int j = 0; j < 11; j++)
+                        {
+                            Console.Write($"  {incidenceMatrix[i, j]}  ");
+                        }
+                        Console.WriteLine();
+                    }
+                    Console.WriteLine();
+                    Graph graph = new Graph(8);
+                    graph.AddEdge(0, 1);
+                    graph.AddEdge(0, 2);
+                    graph.AddEdge(0, 3);
+                    graph.AddEdge(1, 2);
+                    graph.AddEdge(1, 4);
+                    graph.AddEdge(1, 5);
+                    graph.AddEdge(2, 3);
+                    graph.AddEdge(3, 4);
+                    graph.AddEdge(3, 5);
+                    graph.AddEdge(3, 6);
+                    graph.AddEdge(4, 5);
+                    graph.AddEdge(5, 6);
+
+                    graph.IsKColorable(3);
+
                     break;
                 case 3:
                     
