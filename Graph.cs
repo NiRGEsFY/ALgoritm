@@ -11,6 +11,13 @@ namespace ALgoritm
         private int V;
         private List<int>[] adj;
 
+        ConsoleColor[] consoleColor = new ConsoleColor[]
+            {
+                ConsoleColor.Green, ConsoleColor.Red, ConsoleColor.Cyan,
+                ConsoleColor.Yellow, ConsoleColor.Blue, ConsoleColor.Magenta,
+                ConsoleColor.DarkGray, ConsoleColor.DarkGreen, ConsoleColor.DarkYellow
+            };
+
         public Graph(int V)
         {
             this.V = V;
@@ -21,12 +28,8 @@ namespace ALgoritm
 
         public void AddEdge(int v, int w)
         {
-            if(v >= V)
-                v = V-1;
-            if (w >= V)
-                w = V-1;
-            adj[v].Add(w);
-            adj[w].Add(v); 
+            adj[v-1].Add(w-1);
+            adj[w-1].Add(v-1); 
         }
 
         private bool IsKColorable(int[] color, int v, int c)
@@ -63,19 +66,14 @@ namespace ALgoritm
             int[] color = new int[V];
             for (int i = 0; i < V; i++)
                 color[i] = 0;
-            ConsoleColor[] consoleColor = new ConsoleColor[] 
-            { 
-                ConsoleColor.Green, ConsoleColor.Red, ConsoleColor.Cyan,
-                ConsoleColor.Yellow, ConsoleColor.Blue, ConsoleColor.Magenta,
-                ConsoleColor.DarkGray, ConsoleColor.DarkGreen, ConsoleColor.DarkYellow
-            };
+            
 
             if (KColorableUtil(k, color, 0))
             {
                 Console.WriteLine($"Граф может быть покрашен в {k} цветов:");
                 for (int i = 0; i < V; i++)
                 {
-                    Console.ForegroundColor = consoleColor[color[i]];
+                    Console.ForegroundColor = consoleColor[color[i]-1];
                     Console.WriteLine($"Вершина {i + 1} -> Цвет {color[i]}");
                 }
                 Console.ForegroundColor = ConsoleColor.White;
@@ -117,11 +115,62 @@ namespace ALgoritm
             return edgeSubset;
         }
 
+        public void DisplayGraph()
+        {
+            for (int v = 0; v < V; ++v)
+            {
+                Console.Write("\nСписок смежности вершин " + (v+1));
+                foreach (var x in adj[v])
+                {
+                    Console.Write(" -> " + (x+1));
+                }
+                Console.WriteLine();
+            }
+        }
+
+        public void GreedyColoring()
+        {
+            int[] result = new int[V];
+            for (int u = 0; u < V; u++)
+                result[u] = -1;
+
+            result[0] = 0;
+
+            bool[] available = new bool[V];
+            for (int cr = 0; cr < V; cr++)
+                available[cr] = false;
+
+            for (int u = 1; u < V; u++)
+            {
+                foreach (int i in adj[u])
+                    if (result[i] != -1)
+                        available[result[i]] = true;
+
+                int cr;
+                for (cr = 0; cr < V; cr++)
+                    if (available[cr] == false)
+                        break;
+
+                result[u] = cr;
+
+                foreach (int i in adj[u])
+                    if (result[i] != -1)
+                        available[result[i]] = false;
+            }
+
+            for (int u = 0; u < V; u++)
+            {
+                Console.ForegroundColor = consoleColor[result[u]];
+                Console.WriteLine("Вершина " + (u+1) + " --->  Цвет " + (result[u]+1));
+            }
+            Console.ForegroundColor= ConsoleColor.White;
+        }
+
         public bool HasHamiltonianCycle()
         {
             bool[] visited = new bool[V];
             List<int> path = new List<int>();
-            path.Add(0); // Start from vertex 0
+            path.Add(0);
             visited[0] = true;
 
             return HasHamiltonianCycleUtil(0, visited, path, V);

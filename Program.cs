@@ -135,6 +135,16 @@
 
                     break;
                 case 2:
+                    Graph graph = new Graph(5);
+                    graph.AddEdge(0, 1);
+                    graph.AddEdge(0, 2);
+                    graph.AddEdge(1, 3);
+                    graph.AddEdge(2, 3);
+                    graph.AddEdge(3, 4);
+
+                    graph.IsKColorable(3);
+                    break;
+                case 3:
                     int[,] adjacencyMatrix = {
                         { 0, 1, 1, 1, 0, 0, 0 },
                         { 1, 0, 1, 0, 1, 1, 0 },
@@ -146,40 +156,40 @@
                     };
                     int[,] incidenceMatrix =
                     {
-                        { 1, 1, 1, 0, 0, 0, 0, 0 ,0 ,0 ,0 },
-                        { 1, 0, 0, 1, 1, 1, 0, 0 ,0 ,0, 0 },
-                        { 0, 1, 0, 1, 0, 0, 1, 0 ,0 ,0, 0 },
-                        { 0, 0, 1, 0, 0, 0, 1, 1 ,1 ,1, 0 },
-                        { 0, 0, 0, 0, 1, 0, 0, 1 ,0 ,0, 1 },
-                        { 0, 0, 0, 0, 0, 1, 0, 0 ,1 ,0, 0 },
-                        { 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,1, 0 }
+                        { 1, 1, 1, 0, 0, 0, 0, 0 ,0 ,0 ,0, 0 },
+                        { 1, 0, 0, 1, 1, 1, 0, 0 ,0 ,0, 0, 0 },
+                        { 0, 1, 0, 1, 0, 0, 1, 0 ,0 ,0, 0, 0 },
+                        { 0, 0, 1, 0, 0, 0, 1, 1 ,1 ,1, 0, 0 },
+                        { 0, 0, 0, 0, 1, 0, 0, 1 ,0 ,0, 1, 0 },
+                        { 0, 0, 0, 0, 0, 1, 0, 0 ,1 ,0, 1, 1 },
+                        { 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,1, 0, 1 }
                     };
-                    string[] incidenceChanel = { "1,2", "1,3", "1,4", "2,3", "2,5", "2,6", "3,4", "4,5", "4,6", "4,7", "5,6" };
+                    string[] incidenceChanel = { "1,2", "1,3", "1,4", "2,3", "2,5", "2,6", "3,4", "4,5", "4,6", "4,7", "5,6", "6,7" };
 
                     Console.WriteLine("Матрица смежность:");
                     Console.Write("   ");
                     for (int i = 0; i < 7; i++)
                     {
                         Console.ForegroundColor = ConsoleColor.Green;
-                        Console.Write($" {i+1} ");
+                        Console.Write($" {i + 1} ");
                     }
                     Console.ForegroundColor = ConsoleColor.White;
                     Console.WriteLine();
                     for (int i = 0; i < 7; i++)
                     {
                         Console.ForegroundColor = ConsoleColor.Green;
-                        Console.Write($" {i+1} ");
+                        Console.Write($" {i + 1} ");
                         Console.ForegroundColor = ConsoleColor.White;
                         for (int j = 0; j < 7; j++)
                         {
-                            Console.Write($" {adjacencyMatrix[i,j]} ");
+                            Console.Write($" {adjacencyMatrix[i, j]} ");
                         }
                         Console.WriteLine();
                     }
                     Console.WriteLine();
                     Console.WriteLine("Матрица инцидентности:");
                     Console.Write("   ");
-                    for (int i = 0; i < 11; i++)
+                    for (int i = 0; i < 12; i++)
                     {
                         Console.ForegroundColor = ConsoleColor.Green;
                         Console.Write($" {incidenceChanel[i]} ");
@@ -191,32 +201,29 @@
                         Console.ForegroundColor = ConsoleColor.Green;
                         Console.Write($" {i + 1} ");
                         Console.ForegroundColor = ConsoleColor.White;
-                        for (int j = 0; j < 11; j++)
+                        for (int j = 0; j < 12; j++)
                         {
                             Console.Write($"  {incidenceMatrix[i, j]}  ");
                         }
                         Console.WriteLine();
                     }
                     Console.WriteLine();
-                    Graph graph = new Graph(8);
-                    graph.AddEdge(0, 1);
-                    graph.AddEdge(0, 2);
-                    graph.AddEdge(0, 3);
-                    graph.AddEdge(1, 2);
-                    graph.AddEdge(1, 4);
-                    graph.AddEdge(1, 5);
-                    graph.AddEdge(2, 3);
-                    graph.AddEdge(3, 4);
-                    graph.AddEdge(3, 5);
-                    graph.AddEdge(3, 6);
-                    graph.AddEdge(4, 5);
-                    graph.AddEdge(5, 6);
-
-                    graph.IsKColorable(3);
-
-                    break;
-                case 3:
-                    
+                    Graph graph1 = new Graph(7);
+                    graph1.AddEdge(1, 2);
+                    graph1.AddEdge(1, 3);
+                    graph1.AddEdge(1, 4);
+                    graph1.AddEdge(2, 3);
+                    graph1.AddEdge(2, 5);
+                    graph1.AddEdge(2, 6);
+                    graph1.AddEdge(3, 4);
+                    graph1.AddEdge(4, 5);
+                    graph1.AddEdge(4, 6);
+                    graph1.AddEdge(4, 7);
+                    graph1.AddEdge(5, 6);
+                    graph1.AddEdge(6, 7);
+                    graph1.DisplayGraph();
+                    Console.WriteLine("Покраска графов с помощью жадного алгоритма");
+                    graph1.IsKColorable(3);
                     break;
                 case 4:
 
