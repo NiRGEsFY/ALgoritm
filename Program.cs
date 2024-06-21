@@ -26,15 +26,15 @@
                         new string[] {"Q0'bL","Q1'bL",""}
                     };
                     Console.WriteLine("\n");
-                    machineTuring machine = new machineTuring("L110101", ['1', '0', 'L'], rule);
+                    machineTuring machine = new machineTuring("L110101", new char[] { '1', '0', 'L' }, rule);
                     machine.setStart(3);
                     machine.Start();
                     Console.WriteLine("\n");
-                    machineTuring machine2 = new machineTuring("L110L01L101", ['1', '0', 'L'], rule2);
+                    machineTuring machine2 = new machineTuring("L110L01L101", new char[] { '1', '0', 'L'  }, rule2);
                     machine2.setStart(5);
                     machine2.Start();
                     Console.WriteLine("\n");
-                    machineTuring machine3 = new machineTuring("cabdabda", ['a', 'b', 'c', 'd'], rule3);
+                    machineTuring machine3 = new machineTuring("cabdabda", new char[] { 'a', 'b', 'c', 'd' }, rule3);
                     machine3.setStart(7);
                     machine3.Start();
                     Console.WriteLine("\n");
@@ -43,7 +43,7 @@
                         new string[] {"Q0'/R",},
                         new string[] {"."    ,}
                     };
-                    machineTuring machine4 = new machineTuring("111111/1111=", ['1', '/', '='], rule4);
+                    machineTuring machine4 = new machineTuring("111111/1111=", new char[] { '1', '/', '=' }, rule4);
                     machine4.StartMath();
 
                     Console.WriteLine("\n\nФакториал f(x) = x!\n" +
@@ -224,9 +224,39 @@
                     graph1.DisplayGraph();
                     Console.WriteLine("Покраска графов с помощью жадного алгоритма");
                     graph1.IsKColorable(3);
+
+                    Graph graph2 = new Graph(7);
+                    graph2.AddEdge(1, 3);
+                    graph2.AddEdge(1, 4);
+                    graph2.AddEdge(2, 1);
+                    graph2.AddEdge(2, 5);
+                    graph2.AddEdge(2, 6);
+                    graph2.AddEdge(3, 2);
+                    graph2.AddEdge(4, 5);
+                    graph2.AddEdge(4, 6);
+                    graph2.AddEdge(4, 7);
+                    graph2.AddEdge(6, 5);
+                    graph2.AddEdge(6, 7);
+
+                    graph2.DisplayGraph();
+                    Console.WriteLine("Поиск в глубину:");
+                    graph2.DFS(0);
+                    Console.WriteLine("\nПоиск в ширину:");
+                    graph2.BFS(0);
+
+
+
+                    Console.WriteLine();
+                    Graph graph3 = new Graph(4);
+                    graph3.AddEdge(1, 3);
+                    graph3.AddEdge(1, 4);
+                    graph3.AddEdge(2, 3);
+                    graph3.AddEdge(2, 4);
+                    graph3.AddEdge(3, 4);
+                    graph3.EdgeColoring();
                     break;
                 case 4:
-
+                    TravelingSalesman.Start(2);
                     break;
                 case 5:
 

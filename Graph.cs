@@ -10,6 +10,7 @@ namespace ALgoritm
     {
         private int V;
         private List<int>[] adj;
+        private List<Tuple<int, int>> edges;
 
         ConsoleColor[] consoleColor = new ConsoleColor[]
             {
@@ -24,12 +25,15 @@ namespace ALgoritm
             adj = new List<int>[V];
             for (int i = 0; i < V; ++i)
                 adj[i] = new List<int>();
+
+            edges = new List<Tuple<int, int>>();
         }
 
         public void AddEdge(int v, int w)
         {
             adj[v-1].Add(w-1);
-            adj[w-1].Add(v-1); 
+            adj[w-1].Add(v-1);
+            edges.Add(new Tuple<int, int>(v,w));
         }
 
         private bool IsKColorable(int[] color, int v, int c)
@@ -162,6 +166,98 @@ namespace ALgoritm
             {
                 Console.ForegroundColor = consoleColor[result[u]];
                 Console.WriteLine("Вершина " + (u+1) + " --->  Цвет " + (result[u]+1));
+            }
+            Console.ForegroundColor= ConsoleColor.White;
+        }
+
+        public void DFSUtil(int v, bool[] visited)
+        {
+            visited[v] = true;
+            Console.Write(v + 1 + " -> ");
+
+            foreach (int i in adj[v])
+            {
+                if (!visited[i])
+                    DFSUtil(i, visited);
+            }
+        }
+
+
+        public void DFS(int v)
+        {
+            bool[] visited = new bool[V];
+            DFSUtil(v, visited);
+        }
+
+        public void BFS(int s)
+        {
+            bool[] visited = new bool[V];
+            Queue<int> queue = new Queue<int>();
+
+            visited[s] = true;
+            queue.Enqueue(s);
+
+            while (queue.Count != 0)
+            {
+                s = queue.Dequeue();
+                Console.Write(s + 1 + " -> ");
+
+                foreach (int i in adj[s])
+                {
+                    if (!visited[i])
+                    {
+                        visited[i] = true;
+                        queue.Enqueue(i);
+                    }
+                }
+            }
+        }
+
+        public void EdgeColoring()
+        {
+            Dictionary<Tuple<int, int>, int> edgeColors = new Dictionary<Tuple<int, int>, int>();
+
+            int[] result = new int[edges.Count];
+            for (int i = 0; i < edges.Count; i++)
+                result[i] = -1;
+
+            bool[] availableColors = new bool[edges.Count];
+            for (int i = 0; i < edges.Count; i++)
+                availableColors[i] = true;
+
+            result[0] = 0;
+            edgeColors[edges[0]] = 0;
+
+            for (int i = 1; i < edges.Count; i++)
+            {
+                foreach (var edge in edges)
+                {
+                    if ((edge.Item1 == edges[i].Item1 || edge.Item1 == edges[i].Item2 ||
+                         edge.Item2 == edges[i].Item1 || edge.Item2 == edges[i].Item2) &&
+                         result[edges.IndexOf(edge)] != -1)
+                    {
+                        availableColors[result[edges.IndexOf(edge)]] = false;
+                    }
+                }
+
+                int cr;
+                for (cr = 0; cr < edges.Count; cr++)
+                {
+                    if (availableColors[cr])
+                        break;
+                }
+
+                result[i] = cr;
+                edgeColors[edges[i]] = cr;
+
+                for (int j = 0; j < edges.Count; j++)
+                    availableColors[j] = true;
+            }
+
+            for (int i = 0; i < edges.Count; i++)
+            {
+                Console.ForegroundColor = consoleColor[result[i]];
+                Console.WriteLine("Грань (" + edges[i].Item1 + ", " + edges[i].Item2 + ") покрашена в цвет " + (result[i]+1));
             }
             Console.ForegroundColor= ConsoleColor.White;
         }
