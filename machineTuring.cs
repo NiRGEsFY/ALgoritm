@@ -86,7 +86,12 @@ namespace ALgoritm
                 }
                 else if (charact == '.')
                 {
-                    Console.WriteLine(line + $" {memFirstNumber % memLastNumber} " + " End.");
+                    string outLine = line;
+                    for (int i = 0; i < memFirstNumber % memLastNumber; i++)
+                    {
+                        outLine += '1';
+                    }
+                    Console.WriteLine(outLine);
                     return false;
                 }
             }
