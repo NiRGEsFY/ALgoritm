@@ -182,7 +182,6 @@ namespace ALgoritm
             }
         }
 
-
         public void DFS(int v)
         {
             bool[] visited = new bool[V];
@@ -271,6 +270,7 @@ namespace ALgoritm
 
             return HasHamiltonianCycleUtil(0, visited, path, V);
         }
+
         private bool HasHamiltonianCycleUtil(int v, bool[] visited, List<int> path, int V)
         {
             if (path.Count == V)
@@ -294,6 +294,37 @@ namespace ALgoritm
                 }
             }
 
+            return false;
+        }
+
+        private bool DFS(int v, bool[] visited, int K, int currentLength = 0)
+        {
+            visited[v] = true;
+
+            foreach (int neighbor in adj[v])
+            {
+                if (!visited[neighbor])
+                {
+                    if (currentLength + 1 >= K)
+                        return true;
+
+                    if (DFS(neighbor, visited, K, currentLength + 1))
+                        return true;
+                }
+            }
+
+            visited[v] = false;
+            return false;
+        }
+
+        public bool HasLongPath(int K)
+        {
+            bool[] visited = new bool[V];
+            for (int i = 0; i < V; i++)
+            {
+                if (DFS(i, visited, K))
+                    return true;
+            }
             return false;
         }
     }
